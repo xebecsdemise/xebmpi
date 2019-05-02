@@ -1,0 +1,44 @@
+FROM debian:buster
+
+MAINTAINER Xebec <xebecsdemise@outlook.com>
+
+RUN apt-get update && apt-get install -y \
+  sudo \
+  netbase \
+  mpich \
+  python-dev \
+  python-setuptools \
+  python-pip \
+  python-wheel \
+  openssh-server \
+  curl \
+  jq \
+  nano
+
+RUN pip install wheel mpi4py
+
+RUN mkdir -p /var/run/sshd && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config \
+  && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
+  && echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config \
+  && echo "UsePAM no" >> /etc/ssh/sshd_config \
+  && echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config \
+  && touch /root/.Xauthority \
+  && true
+
+RUN useradd -ms /bin/bash mpi \
+  && echo "mpi   ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+  && mkdir /home/mpi/.ssh \
+  && chown mpi:mpi /home/mpi/.ssh \
+  && chmod 700 /home/mpi/.ssh \
+  && echo "mpi:mpi" | chpasswd 
+
+RUN mkdir /swarm
+
+COPY xebmpi-node.sh /home/mpi/xebmpi-node.sh
+RUN chown mpi:mpi /home/mpi/xebmpi-node.sh \
+  && chmod +x /home/mpi/xebmpi-node.sh
+
+EXPOSE 22
+
+ENTRYPOINT ["/home/mpi/xebmpi-node.sh"]
+
