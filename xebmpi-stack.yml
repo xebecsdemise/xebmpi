@@ -11,8 +11,8 @@ services:
     deploy:
       replicas: 1
 
-  mpimaster:
-    image: xebec/xebmpi-master:0.1
+  mpialice:
+    image: xebec/xebmpi-alice:0.1
     volumes:
       - /swarm:/swarm
     ports:
@@ -22,8 +22,8 @@ services:
     deploy:
       replicas: 1
 
-  mpinode:
-    image: xebec/xebmpi-node:0.1
+  mpidoll:
+    image: xebec/xebmpi-doll:0.1
     volumes:
     - /swarm:/swarm
     networks:
