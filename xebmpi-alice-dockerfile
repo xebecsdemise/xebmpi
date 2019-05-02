@@ -2,12 +2,13 @@ FROM ubuntu:18.04
 
 MAINTAINER Xebec <xebecsdemise@outlook.com>
 
-RUN apt-get update && apt-get -y upgrade \
+RUN apt-get update \
   && apt-get -y install --no-install-recommends \
-  mpich \
+  openmpi-bin \
   python-mpi4py \
   openssh-server \
   curl \
+  jq \
   nano
 
 RUN mkdir -p /var/run/sshd && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config \
@@ -34,4 +35,5 @@ RUN chown mpi:mpi /home/mpi/xebmpi-alice.sh \
 EXPOSE 22
 
 ENTRYPOINT ["/home/mpi/xebmpi-alice.sh"]
+
 
