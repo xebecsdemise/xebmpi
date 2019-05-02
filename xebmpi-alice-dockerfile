@@ -3,9 +3,9 @@ FROM alpine:3.9.3
 MAINTAINER Xebec <xebecsdemise@outlook.com>
 
 RUN apk update && apk upgrade \
-  apk add sudo \
-  apk add build-base \
-  apk add sshd
+  && apk add sudo \
+  && apk add build-base \
+  && apk add sshd
 
 RUN mkdir /tmp/mpich-build
 WORKDIR /tmp/mpich-build
