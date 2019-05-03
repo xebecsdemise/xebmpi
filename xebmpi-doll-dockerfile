@@ -1,21 +1,15 @@
-FROM debian:buster
+FROM ubuntu:18.04
 
 MAINTAINER Xebec <xebecsdemise@outlook.com>
 
-RUN apt-get update && apt-get install -y \
-  sudo \
-  netbase \
-  mpich \
-  python-dev \
-  python-setuptools \
-  python-pip \
-  python-wheel \
+RUN apt-get update \
+  && apt-get -y install --no-install-recommends \
+  openmpi-bin \
+  python-mpi4py \
   openssh-server \
   curl \
   jq \
   nano
-
-RUN pip install wheel mpi4py
 
 RUN mkdir -p /var/run/sshd && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config \
   && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
@@ -30,7 +24,7 @@ RUN useradd -ms /bin/bash mpi \
   && mkdir /home/mpi/.ssh \
   && chown mpi:mpi /home/mpi/.ssh \
   && chmod 700 /home/mpi/.ssh \
-  && echo "mpi:mpi" | chpasswd 
+  && echo "mpi:mpi" | chpasswd
 
 RUN mkdir /swarm
 
@@ -41,4 +35,3 @@ RUN chown mpi:mpi /home/mpi/xebmpi-doll.sh \
 EXPOSE 22
 
 ENTRYPOINT ["/home/mpi/xebmpi-doll.sh"]
-
