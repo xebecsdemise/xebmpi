@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-MAINTAINER Xebec <xebecsdemise@outlook.com>
-
 RUN apt-get update \
   && apt-get -y install --no-install-recommends \
   openmpi-bin \
@@ -24,9 +22,9 @@ RUN mkdir -p /var/run/sshd && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSep
   && chmod 700 /home/mpi/.ssh \
   && echo "mpi:mpi" | chpasswd 
 
-COPY chown mpi:mpi id_rsa /home/mpi/.ssh/
-COPY chown mpi:mpi id_rsa.pub /home/mpi/.ssh/
-COPY chown mpi:mpi hello.py /home/mpi/
+COPY --chown=mpi:mpi id_rsa /home/mpi/.ssh/
+COPY --chown=mpi:mpi id_rsa.pub /home/mpi/.ssh/
+COPY --chown=mpi:mpi hello.py /home/mpi/
 
 RUN mkdir /swarm \
   && cp /home/mpi/.ssh/id_rsa.pub /home/mpi/.ssh/authorized_keys
