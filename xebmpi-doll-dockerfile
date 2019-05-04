@@ -28,14 +28,8 @@ COPY --chown=mpi:mpi hello.py /home/mpi/
 
 RUN chmod 600 /home/mpi/.ssh/id* \
   && cp /home/mpi/.ssh/id_rsa.pub /home/mpi/.ssh/authorized_keys \
-<<<<<<< HEAD
   && chown mpi:mpi /home/mpi/.ssh/authorized_keys \
-=======
-<<<<<<< HEAD
   && chown mpi:mpi /home/mpi/.ssh/authorized_keys \
-=======
->>>>>>> master
->>>>>>> master
   && mkdir /swarm 
 
 COPY xebmpi-doll.sh /home/mpi/xebmpi-doll.sh
