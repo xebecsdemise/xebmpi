@@ -22,11 +22,19 @@ RUN mkdir -p /var/run/sshd && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSep
   && mkdir /home/mpi/.ssh \
   && chown mpi:mpi /home/mpi/.ssh \
   && chmod 700 /home/mpi/.ssh \
-  && echo "mpi:mpi" | chpasswd \
-  && mkdir /swarm
+  && echo "mpi:mpi" | chpasswd 
+
+COPY chown mpi:mpi id_rsa /home/mpi/.ssh/
+COPY chown mpi:mpi id_rsa.pub /home/mpi/.ssh/
+COPY chown mpi:mpi hello.py /home/mpi/
+
+RUN mkdir /swarm \
+  && cp /home/mpi/.ssh/id_rsa.pub /home/mpi/.ssh/authorized_keys
 
 COPY xebmpi-alice.sh /home/mpi/xebmpi-alice.sh
 COPY buildmachinefile.sh /home/mpi/buildmachinefile.sh
+
+
 RUN chown mpi:mpi /home/mpi/xebmpi-alice.sh \
   && chmod +x /home/mpi/xebmpi-alice.sh \
   && chown mpi:mpi /home/mpi/buildmachinefile.sh \

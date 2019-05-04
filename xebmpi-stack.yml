@@ -5,7 +5,7 @@ services:
   mpiconsul:
     image: consul:latest
     ports: 
-      - "81:8500"
+      - "8500"
     networks:
       - xebmpinet
     deploy:
