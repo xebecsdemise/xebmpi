@@ -32,9 +32,7 @@ RUN mkdir /swarm \
 COPY xebmpi-doll.sh /home/mpi/xebmpi-doll.sh
 
 RUN chown mpi:mpi /home/mpi/xebmpi-doll.sh \
-  && chmod +x /home/mpi/xebmpi-doll.sh \
-  && chown mpi:mpi /home/mpi/buildmachinefile.sh \
-  && chmod +x /home/mpi/buildmachinefile.sh
+  && chmod +x /home/mpi/xebmpi-doll.sh 
 
 EXPOSE 22
 
