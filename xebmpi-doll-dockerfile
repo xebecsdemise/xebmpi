@@ -26,8 +26,10 @@ COPY --chown=mpi:mpi id_rsa /home/mpi/.ssh/
 COPY --chown=mpi:mpi id_rsa.pub /home/mpi/.ssh/
 COPY --chown=mpi:mpi hello.py /home/mpi/
 
-RUN mkdir /swarm \
-  && cp /home/mpi/.ssh/id_rsa.pub /home/mpi/.ssh/authorized_keys
+RUN chmod 600 /home/mpi/.ssh/id* \
+  && cp /home/mpi/.ssh/id_rsa.pub /home/mpi/.ssh/authorized_keys \
+  && chown mpi:mpi /home/mpi/.ssh/authorized_keys \
+  && mkdir /swarm 
 
 COPY xebmpi-doll.sh /home/mpi/xebmpi-doll.sh
 
