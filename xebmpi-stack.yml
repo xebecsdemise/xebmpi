@@ -12,7 +12,7 @@ services:
       replicas: 1
 
   mpialice:
-    image: xebec/xebmpi-alice:x64dev
+    image: xebec/xebmpi-alice
     volumes:
       - /swarm:/swarm
     ports:
@@ -23,7 +23,7 @@ services:
       replicas: 1
 
   mpidoll:
-    image: xebec/xebmpi-doll:x64dev
+    image: xebec/xebmpi-doll
     volumes:
     - /swarm:/swarm
     networks:
